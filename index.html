@@ -4,16 +4,73 @@
     <meta charset="UTF-8" />
     <title>Procesamiento de texto</title>
   </head>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    h1 {
+      text-align: center;
+    }
+    #form-texto {
+      width: 50%;
+      margin: 0 auto;
+    }
+    #form-texto label {
+      font-weight: bold;
+    }
+    #form-texto textarea {
+      width: 100%;
+    }
+    #form-texto button {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #form-texto button:hover {
+      background-color: #3e8e41;
+    }
+    #loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      font-size: 20px;
+      color: white;
+      z-index: 1000;
+    }
+  </style>
   <body>
     <h1>Procesamiento de texto</h1>
     <form id="form-texto">
       <label for="texto">Ingrese el texto:</label><br />
       <textarea id="texto" name="text" rows="10" cols="50"></textarea><br />
       <button type="button" onclick="procesarTexto()">Procesar texto</button>
-      <button type="button" onclick="crearMp3()">Crear archivo MP3</button>
     </form>
+    <div id="loading" style="display: none">Procesando...</div>
+    <a
+      id="descarga"
+      href="/audio-final.mp3"
+      download="audio-final.mp3"
+      style="display: none"
+    >
+      Descargar audio </a
+    >;
     <script>
       function procesarTexto() {
+        //Disable button
+        document.getElementById("form-texto").attributes["disabled"] = true;
+
+        //Mostrar loading con ID loading
+        document.getElementById("loading").style.display = "block";
+
+        //Enviar texto al servidor
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/procesar-texto");
         xhr.setRequestHeader(
@@ -27,21 +84,6 @@
         };
         const formData = new FormData(document.getElementById("form-texto"));
         xhr.send(new URLSearchParams(formData).toString());
-      }
-
-      function crearMp3() {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/crear-mp3");
-        xhr.setRequestHeader(
-          "Content-Type",
-          "application/x-www-form-urlencoded"
-        );
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
-          }
-        };
-        xhr.send();
       }
     </script>
   </body>

@@ -51,6 +51,36 @@ async function generateAudioFiles(text, speechConfig) {
   return audioFiles;
 }
 
+async function procesarTexto() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/procesar-texto");
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      console.log(xhr.responseText);
+    }
+  };
+  const formData = new FormData(document.getElementById("form-texto"));
+  xhr.send(new URLSearchParams(formData).toString());
+
+  // Muestra un mensaje de "Cargando..."
+  document.getElementById("loading").innerHTML = "Cargando...";
+
+  // Al final de la función `mergeAndConvertAudioFiles()`, crea un enlace para descargar el MP3
+  const finalAudioFile = await mergeAndConvertAudioFiles(audioFiles);
+  const file = fs.createReadStream(finalAudioFile);
+  const fileSize = await fs.statSync(finalAudioFile).size;
+  res.writeHead(200, {
+    "Content-Type": "audio/mpeg",
+    "Content-Disposition": "attachment; filename=" + finalAudioFile,
+    "Content-Length": fileSize,
+  });
+  file.pipe(res);
+
+  // Elimina el mensaje de "Cargando..."
+  document.getElementById("loading").innerHTML = "";
+}
+
 function mergeAndConvertAudioFiles(audioFiles) {
   return new Promise((resolve, reject) => {
     const command = ffmpeg();
@@ -77,7 +107,6 @@ function mergeAndConvertAudioFiles(audioFiles) {
           })
           .on("end", function () {
             console.log("Archivo .mp3 generado correctamente");
-            resolve("audio-final.mp3");
           });
       });
   });
