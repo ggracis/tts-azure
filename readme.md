@@ -9,7 +9,14 @@ proyecto.
 
 Antes de comenzar, asegúrate de tener instalado Node.js en tu computadora.
 También necesitarás una suscripción a Microsoft Cognitive Services para poder
-utilizar la API de síntesis de voz.
+utilizar la API de síntesis de voz. Puedes obtener una suscripción gratuita de
+90 días en el
+[sitio oficial](https://azure.microsoft.com/en-us/try/cognitive-services/).
+Instalar ffmpeg en tu computadora. Puedes descargarlo desde su
+[sitio oficial](https://ffmpeg.org/download.html). Y agregarlo a las variables
+de entorno de tu sistema. Puedes seguir
+[esta guía](https://www.thewindowsclub.com/how-to-install-ffmpeg-on-windows-10)
+para hacerlo.
 
 ## Instalación
 
@@ -29,12 +36,6 @@ SPEECH_REGION=<la región de tu suscripción>
 
 2. En el archivo `index.js`, puedes modificar la voz utilizada para la síntesis
    de voz cambiando el valor de `speechConfig.speechSynthesisVoiceName`.
-
-3. Instalar ffmpeg en tu computadora. Puedes descargarlo desde su
-   [sitio oficial](https://ffmpeg.org/download.html). Y agregarlo a las
-   variables de entorno de tu sistema. Puedes seguir
-   [esta guía](https://www.thewindowsclub.com/how-to-install-ffmpeg-on-windows-10)
-   para hacerlo.
 
 ## Uso
 
