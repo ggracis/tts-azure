@@ -1,8 +1,6 @@
 {
   "dependencies": {
-    "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
-    "microsoft-cognitiveservices-speech-sdk": "^1.28.0",
-    "ws": "^8.13.0"
+    "microsoft-cognitiveservices-speech-sdk": "^1.28.0"
   }
 }
