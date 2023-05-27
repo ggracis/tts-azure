@@ -1,39 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Procesamiento de texto</title>
     <meta charset="UTF-8" />
+    <title>Procesamiento de texto</title>
   </head>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    h1 {
-      text-align: center;
-    }
-    form {
-      width: 50%;
-      margin: 0 auto;
-    }
-    textarea {
-      width: 100%;
-    }
-    button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #fff;
-      cursor: pointer;
-    }
-  </style>
   <body>
     <h1>Procesamiento de texto</h1>
     <form id="form-texto">
       <label for="texto">Ingrese el texto:</label><br />
       <textarea id="texto" name="text" rows="10" cols="50"></textarea><br />
       <button type="button" onclick="procesarTexto()">Procesar texto</button>
+      <button type="button" onclick="crearMp3()">Crear archivo MP3</button>
     </form>
     <script>
       function procesarTexto() {
@@ -50,6 +27,21 @@
         };
         const formData = new FormData(document.getElementById("form-texto"));
         xhr.send(new URLSearchParams(formData).toString());
+      }
+
+      function crearMp3() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/crear-mp3");
+        xhr.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+          }
+        };
+        xhr.send();
       }
     </script>
   </body>
